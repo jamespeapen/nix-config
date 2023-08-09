@@ -39,7 +39,17 @@
       tmux
       urlscan
       urlview
-      weechat
+      (weechat.override {
+         configure = {availablePlugins, ...}: {
+           plugins = with availablePlugins; [
+             python
+           ];
+           scripts = with weechatScripts; [
+             wee-slack
+             edit
+           ];
+         };
+      })
       youtube-dl
       yq-go
       zoxide
