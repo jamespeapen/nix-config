@@ -47,6 +47,7 @@ in
       pre-commit
       ripgrep
       ripgrep-all
+      safe-rm
       smartmontools
       sqlite
       tmux
