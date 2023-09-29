@@ -21,7 +21,7 @@ in
       calcurse
       delta
       entr
-      exa
+      eza
       fd
       fzf
       gcc
