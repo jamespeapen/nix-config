@@ -1,37 +1,29 @@
 {
-
-  description = "My Home Manager Flake";
+  description = "NixOS configuration";
 
   inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dotfiles = {
-      type = "git";
-      url = "https://github.com/jamespeapen/dotfiles";
-      flake = false;
-      submodules = true;
-    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, dotfiles, ...}@inputs:
-    let
-    system = "x86_64-linux";
-  pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    homeConfigurations."tux" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+    nixosConfigurations = {
+      hostname = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.tux = import ./home.nix;
 
-      modules = [ ./home.nix ];
-      extraSpecialArgs = {
-        inherit (inputs) dotfiles;
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+          }
+        ];
       };
     };
   };
-
 }
 # vim:set et sw=2 ts=2:
