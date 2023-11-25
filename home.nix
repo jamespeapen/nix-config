@@ -1,11 +1,11 @@
-{ config, pkgs, lib, home, dotfiles, ... }:
+{ config, pkgs, lib, home, ... }:
 
 let
-  core = import ./config/core.nix {config = config; pkgs = pkgs; home = home; dotfiles = dotfiles};
-  gui = import ./config/gui.nix {config = config; pkgs = pkgs; home = home; dotfiles = dotfiles};
+  core = import ./config/core.nix {config = config; pkgs = pkgs; home = home;};
+  gui = import ./config/gui.nix {config = config; pkgs = pkgs; home = home;};
 in
 {
-  imports = [ ./config/core.nix ./config/gui.nix];
+  imports = [ ./config/core.nix ./config/gui.nix ];
 
   home = {
     stateVersion = "23.05";

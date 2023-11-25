@@ -1,4 +1,4 @@
-{ config, pkgs, dotfiles, ... }:
+{ config, pkgs, ... }:
 
 let
   # Inspiration: https://github.com/NixOS/nixpkgs/issues/108480#issuecomment-1115108802
@@ -135,13 +135,13 @@ in
   home.file = {
     ".zshenv" = {
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zsh/zshenv;
-    };
+  };
 
-    ".local/bin" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/bin;
-      recursive = true;
-      executable = true;
-    };
+  #  ".local/bin" = {
+  #    source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/bin;
+  #    recursive = true;
+  #    executable = true;
+  #  };
   };
 
 }

@@ -3,11 +3,10 @@
 {
   home = {
     packages = with pkgs; [
+      gcolor3
       inkscape
-      lm_sensors
       mutt-wizard
       rxvt-unicode
-      tilix
       vlc
       warpd
       xdragon
