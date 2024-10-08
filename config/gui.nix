@@ -1,4 +1,4 @@
-{ config, pkgs, dotfiles, ... }:
+{ config, pkgs, ... }:
 
 {
   home = {
@@ -7,10 +7,8 @@
       lm_sensors
       mutt-wizard
       rxvt-unicode
-      tilix
       vlc
       warpd
-      xdragon
       zathura
     ];
   };
@@ -28,6 +26,10 @@
   xdg.configFile = {
     "i3" = {
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/i3;
+      recursive = true;
+    };
+    "polybar" = {
+      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/polybar;
       recursive = true;
     };
     "sway" = {

@@ -1,4 +1,4 @@
-{ config, pkgs, dotfiles, ... }:
+{ config, pkgs, ... }:
 
 let
   # Inspiration: https://github.com/NixOS/nixpkgs/issues/108480#issuecomment-1115108802
@@ -8,10 +8,31 @@ let
     pathsToLink = ["/bin"];
     nativeBuildInputs = [ makeWrapper ];
     postBuild = ''
-        wrapProgram "$out/bin/mbsync" \
-          --prefix SASL_PATH : "${cyrus_sasl}/lib/sasl2:${cyrus-sasl-xoauth2}/lib/sasl2"
+      wrapProgram "$out/bin/mbsync" \
+      --prefix SASL_PATH : "${cyrus_sasl}/lib/sasl2:${cyrus-sasl-xoauth2}/lib/sasl2"
       '';
   };
+
+  # wee-slack = with pkgs; weechatScripts.wee-slack.overrideAttrs (old: {
+  #   src = fetchFromGitHub {
+  #     owner = "wee-slack";
+  #     repo = "wee-slack";
+  #     rev = "f4fcf380e7baff9b84d32ac5c55fd8effd393119";
+  #     sha256 = "ZLkYjlgtSXKzGzWq8annmGALyfxQQdHqR+Mmm5bvkbU=";
+  #   };
+  # });
+  weechat_slack = with pkgs; weechat.override {
+    configure = {availablePlugins, ...}: {
+      plugins = with availablePlugins; [
+        python
+      ];
+      scripts = with weechatScripts; [
+        wee-slack
+        edit
+      ];
+    };
+  };
+
 in
 {
   home = {
@@ -19,32 +40,38 @@ in
       abook
       btop
       calcurse
+      csview
       delta
+      dufs
       entr
       eza
+      fastfetch
       fd
       fzf
       gcc
-      git
+      gitFull
+      glow
       gnumake
       htop
-      isync-oauth2
-      lynx
-      msmtp
-      neomutt
       hyperfine
+      i3-resurrect
+      isync-oauth2
       jq
+      ijq
+      lynx
       miller
       msmtp
-      neofetch
+      msmtp
+      neomutt
       ntfy-sh
+      numbat
       oath-toolkit
       pandoc
       parallel
-      (pass.withExtensions (ext: with ext; [
-        pass-tomb
-      ]))
+      (pass.withExtensions (ext: with ext; [ pass-tomb ]))
       pre-commit
+      python3Packages.ptpython
+      rename
       ripgrep
       ripgrep-all
       safe-rm
@@ -52,22 +79,12 @@ in
       sqlite
       tmux
       urlscan
-      urlview
-      (weechat.override {
-         configure = {availablePlugins, ...}: {
-           plugins = with availablePlugins; [
-             python
-           ];
-           scripts = with weechatScripts; [
-             wee-slack
-             edit
-           ];
-         };
-      })
-      youtube-dl
+      viddy
+      weechat_slack
+      yt-dlp
       yq-go
       zoxide
-    ];
+      ];
   };
 
   programs = {
@@ -89,6 +106,11 @@ in
       };
     };
 
+    navi = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     # neovim
     neovim = {
       enable = true;
@@ -96,19 +118,24 @@ in
         # neovim
         python3Packages.pynvim
         # LSPs
-        shellcheck
         nodePackages_latest.bash-language-server
+        ccls
+        nodePackages_latest.typescript-language-server
+        gopls
+        pyright
         python3Packages.jedi-language-server
         lua-language-server
+        ruff
         rust-analyzer
         rusty-man
+        shellcheck
         texlab
+        vale
       ];
     };
-
   };
 
-  # ~/.config file symlinks
+# ~/.config file symlinks
   xdg.configFile = {
     "fd" = {
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/fd;
@@ -122,10 +149,14 @@ in
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/nvim;
       recursive = true;
     };
-    "tmux" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/tmux;
+    "navi" = {
+      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/navi;
       recursive = true;
     };
+    #"tmux" = {
+    #  source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/tmux;
+    #  recursive = true;
+    #};
     "zsh" = {
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zsh;
       recursive = true;
@@ -135,12 +166,6 @@ in
   home.file = {
     ".zshenv" = {
       source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zsh/zshenv;
-    };
-
-    ".local/bin" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/bin;
-      recursive = true;
-      executable = true;
     };
   };
 
