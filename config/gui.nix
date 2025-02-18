@@ -25,23 +25,23 @@
   # ~/.config file symlinks
   xdg.configFile = {
     "i3" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/i3;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/i3";
       recursive = true;
     };
     "polybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/polybar;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/polybar";
       recursive = true;
     };
     "sway" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/sway;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/sway";
       recursive = true;
     };
     "waybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/waybar;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/waybar";
       recursive = true;
     };
     "zathura" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zathura;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/zathura";
       recursive = true;
     };
   };

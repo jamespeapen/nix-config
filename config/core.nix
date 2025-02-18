@@ -138,34 +138,34 @@ in
 # ~/.config file symlinks
   xdg.configFile = {
     "fd" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/fd;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/fd";
       recursive = true;
     };
     "git" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/git;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/git";
       recursive = true;
     };
     "nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/nvim;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/nvim";
       recursive = true;
     };
     "navi" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/navi;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/navi";
       recursive = true;
     };
     #"tmux" = {
-    #  source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/tmux;
+    #  source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/tmux";
     #  recursive = true;
     #};
     "zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zsh;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/zsh";
       recursive = true;
     };
   };
 
   home.file = {
     ".zshenv" = {
-      source = config.lib.file.mkOutOfStoreSymlink ~/Documents/dotfiles/config/zsh/zshenv;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/dotfiles/config/zsh/zshenv";
     };
   };
 
