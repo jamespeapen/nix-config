@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # Inspiration: https://github.com/NixOS/nixpkgs/issues/108480#issuecomment-1115108802
