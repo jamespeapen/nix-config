@@ -45,10 +45,12 @@ in
       dufs
       entr
       eza
+      exiftool
       fastfetch
       fd
       fzf
       gcc
+      gdu
       gitFull
       glow
       gnumake
@@ -60,7 +62,6 @@ in
       ijq
       lynx
       miller
-      msmtp
       msmtp
       neomutt
       ntfy-sh
