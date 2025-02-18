@@ -136,6 +136,26 @@ in
     };
   };
 
+  services = {
+    syncthing = {
+      enable = true;
+      overrideFolders = false;
+      overrideDevices = false;
+      settings = {
+        options = {
+          globalAnnounceEnabled = false;
+          localAnnounceEnabled = true;
+          relaysEnabled = false;
+          natEnabled = false;
+          urAccepted = -1;
+        };
+      };
+      extraOptions = [
+        "--no-default-folder"
+      ];
+    };
+  };
+
 # ~/.config file symlinks
   xdg.configFile = {
     "fd" = {
@@ -170,6 +190,11 @@ in
     };
   };
 
+  home.activation = {
+    restartSyncthing = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      /usr/bin/systemctl --user restart syncthing.service syncthing-init.service
+    '';
+  };
 }
 
 # vim:set et sw=2 ts=2:
