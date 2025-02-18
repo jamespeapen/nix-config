@@ -1,37 +1,29 @@
 {
-
-  description = "My Home Manager Flake";
+  description = "Home Manager configuration of james.eapen";
 
   inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    };
+    # Specify the source of Home Manager and Nixpkgs.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dotfiles = {
-      type = "git";
-      url = "https://github.com/jamespeapen/dotfiles";
-      flake = false;
-      submodules = true;
-    };
   };
 
-  outputs = { nixpkgs, home-manager, dotfiles, ...}@inputs:
+  outputs = { nixpkgs, home-manager, ... }:
     let
-    system = "x86_64-linux";
-  pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    homeConfigurations."tux" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      homeConfigurations."james.eapen" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
 
-      modules = [ ./home.nix ];
-      extraSpecialArgs = {
-        inherit (inputs) dotfiles;
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [ ./home.nix ];
+
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
       };
     };
-  };
-
 }
-# vim:set et sw=2 ts=2:
